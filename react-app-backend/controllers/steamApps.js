@@ -1,5 +1,5 @@
 const steamAppsRouter = require('express').Router();
-const request = require('request');
+const axios = require('axios');
 
 const steamKey = 'BDB5E293C348DB91175B17297A4BD784';
 const baseUrlApi = 'http://api.steampowered.com/';
@@ -10,10 +10,8 @@ const appDetailsUrl = `${ baseUrlStore }api/appdetails`;
 
 steamAppsRouter.get('/', async (req, res) => {
     try {
-        await request(allAppsUrl, (err, response, body) => {
-            console.log(body)
-            res.send(JSON.parse(body));
-        })
+        const allApps = await axios.get(allAppsUrl);
+        res.send(allApps.data);
     } catch (exception) {
         console.log(exception);
     }
@@ -21,10 +19,8 @@ steamAppsRouter.get('/', async (req, res) => {
 
 steamAppsRouter.get('/:id', async (req, res) => {
     try {
-        await request(`${ appDetailsUrl }/?appids=${ req.params.id }`, (err, response, body) => {
-            console.log(body)
-            res.send(JSON.parse(body));
-        });
+        const steamApp = await axios.get(`${ appDetailsUrl }/?appids=${ req.params.id }`);
+        res.send(steamApp.data);
     } catch (exception) {
         console.log(exception);
     }

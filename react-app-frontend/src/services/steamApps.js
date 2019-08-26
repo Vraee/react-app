@@ -3,18 +3,15 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:3001/api/steamapps';
 
 const getAll = async () => {
+    console.log('getAll');
     const res = await axios.get(baseUrl);
-    console.log(res.data)
-    return res.data;
+    return res.data.applist.apps;
 };
 
 const getById = async (id) => {
-    console.log('getbyid')
+    console.log('getById');
     const res = await axios.get(`${ baseUrl }/${ id }`);
-    //console.log(res.data[id].data)
-    const data = res.data;
-    console.log(data)
-    return data;
+    return res.data[id].data;
 }
 
 export default { getAll, getById };

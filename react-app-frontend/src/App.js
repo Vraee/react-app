@@ -2,15 +2,40 @@ import React, { useState, useEffect } from 'react';
 
 import steamAppService from './services/steamApps';
 
-const AppList = ({ apps }) => {
+const SteamAppList = ({ apps }) => {
     if (apps !== null) {
         return(
-            apps.map(a => a.name)
+            apps.map( a =>
+                <SteamAppSummarised key={ a.appid } app={ a }/>
+            )
         );
     }
 
     return null;
+};
+
+const SteamAppSummarised = ({ app }) => {
+    return(
+        <div>
+            <h2>{ app.name }</h2>
+            <p>{ app.type }</p>
+            <p>{ app.short_description }</p>
+        </div>
+    );
 }
+
+const SteamApp = ({ app }) => {
+    return(
+        <div>
+            <h2>{ app.name }</h2>
+            <p>{ app.detailed_description }</p>
+            { app.screenshots !== undefined && app.screenshots.length > 0
+                ? <img src={ app.screenshots[0].path_thumbnail } width='200' alt={ `screenshot of Steam app ${ app.name }` } />
+                : null
+            }
+        </div>
+    );
+};
 
 const App = () => {
     const [allApps, setAllApps] = useState([]);
@@ -21,30 +46,27 @@ const App = () => {
     useEffect(() => {
         async function getAllInitialApps() {
             const allInitialApps = await steamAppService.getAll();
-            console.log('initial apps: ' + allInitialApps)
-            await setAllApps(allInitialApps);
-            console.log('aaaaa')
-            console.log('all apps: ' + allApps);
+            setAllApps(allInitialApps);
         }
         getAllInitialApps();
     }, []);
 
     const selectSteamApp = async (id) => {
-        const appData = await steamAppService.getById(440);
-        console.log("Selected app data " + appData)
-        setSelectedApp(appData);
-        console.log(selectedApp)
+        const app = await steamAppService.getById(440);
+        setSelectedApp(app);
     }
 
     return (
         <div>
-            {/* { allApps.length > 0
-                ? <AppList apps={ allApps.applist.apps } />
-                : <h2>aaaaaa</h2>
-            } */}
-
             <button onClick={ () => selectSteamApp(440) }>Click</button>
-            <h1>App</h1>
+            { selectedApp !== null
+                ? <SteamApp app={ selectedApp } />
+                : null
+            }
+            { allApps.length > 0
+                ? <SteamAppList apps={ allApps } />
+                : null
+            }
         </div>
     );
 }
