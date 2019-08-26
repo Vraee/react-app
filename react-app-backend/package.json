@@ -1,0 +1,28 @@
+{
+  "name": "react-app-backend",
+  "version": "0.0.1",
+  "description": "react-app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vraee/react-app.git"
+  },
+  "author": "Veera Tikkamäki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vraee/react-app/issues"
+  },
+  "homepage": "https://github.com/Vraee/react-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1",
+    "request": "^2.88.0"
+  },
+  "proxy": "http://localhost:3001"
+}
