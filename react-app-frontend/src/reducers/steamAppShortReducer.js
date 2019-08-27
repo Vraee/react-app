@@ -5,7 +5,6 @@ let allApps;
 
 // Handles only names and ids rather than detailed data for each app
 const steamAppShortReducer = (state = [], action) => {
-    console.log('steamAppShortReducer')
     switch (action.type) {
         case 'INIT_APPS':
             allApps = action.data;
@@ -19,7 +18,6 @@ const steamAppShortReducer = (state = [], action) => {
 }
 
 export const initialiseApps = (apps) => {
-    console.log('initialiseApps')
     return async dispatch => {
         const apps = await loader.waitForLoad(steamAppService.getAll());
         dispatch({
@@ -30,7 +28,6 @@ export const initialiseApps = (apps) => {
 };
 
 export const filterApps = (filter) => {
-    console.log('filterApps')
     return {
         type: 'FILTER_APPS',
         data: { filter }

@@ -30,6 +30,13 @@ steamAppsRouter.get('/:id', async (req, res) => {
     }
 });
 
-// TODO GetNewsForApp, GetGlobalAchievementPercentagesForApp 
+steamAppsRouter.get('/:id/news', async (req, res) => {
+    try {
+        const appNews = await axios.get(`${ baseUrlApi }/ISteamNews/GetNewsForApp/v0002/?appid=${ req.params.id }&count=3&format=json`);
+        res.send(appNews.data);
+    } catch (exception) {
+        console.log(exception);
+    }
+});
 
 module.exports = steamAppsRouter;

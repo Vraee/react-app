@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 const SteamAppNameList = (props) => {
     if (props.shortApps.length <= 50 && props.shortApps.lengt > 10) {
         return(
-            props.shortApps.map( a =>
-                <SteamAppName key={ a.appid } app={ a }/>
-            )
+            props.shortApps
+                .sort()
+                .map( a =>
+                    <SteamAppName key={ a.appid } app={ a }/>
+                )
         );
     }
     return null;
