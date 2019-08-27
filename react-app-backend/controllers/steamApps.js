@@ -8,6 +8,7 @@ const allAppsUrl = `${ baseUrlApi }ISteamApps/GetAppList/v0002/?key=${ steamKey 
 const baseUrlStore = "https://store.steampowered.com/";
 const appDetailsUrl = `${ baseUrlStore }api/appdetails`;
 
+// Gets all apps (= all names and their associated ids)
 steamAppsRouter.get('/', async (req, res) => {
     try {
         const allApps = await axios.get(allAppsUrl);
@@ -17,6 +18,7 @@ steamAppsRouter.get('/', async (req, res) => {
     }
 });
 
+// Gets data for the specified app
 steamAppsRouter.get('/:id', async (req, res) => {
     try {
         // Despite the parameter name 'appids', the API apparently doesn't

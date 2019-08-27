@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import steamAppService from './services/steamApps';
+import loader from './utils/loader';
 
 const SteamAppNameList = ({ apps }) => {
     if (apps !== null) {
@@ -18,22 +19,25 @@ const SteamAppListName = ({ app }) => {
     return(
         <div>
             <h3>{ app.name }</h3>
+            <p><b>{ `SteamID ${ app.appid }` }</b></p>
         </div>
     );
 };
 
 const SteamAppSummaryList = ({ apps }) => {
     return(
-        apps.map( a =>
-            <SteamAppSummarized key={ a.appid } app={ a }/>
-        )
+        apps
+            .filter(a => a !== undefined)
+            .map(a =>
+                <SteamAppSummarized key={ a.steam_appid } app={ a }/>
+            )
     );
 };
 
 const SteamAppSummarized = ({ app }) => {
     return(
         <div>
-            <h2>{ app.name }{ app.appid }</h2>
+            <h2>{ app.name }</h2>
             <p>{ `Type: ${ app.type !== undefined ? app.type : 'UNKNOWN' }` }</p>
             <p>{ `Publisher: ${ app.developers !== undefined ? app.developers[0] : 'UNKNOWN '}` }</p>
             <p>{ `Developer: ${ app.publishers !== undefined ? app.publishers[0] : 'UNKNOWN' }` }</p>
@@ -69,16 +73,16 @@ const SteamAppFilter = ({ filter, onFilterChange }) => {
 
 const App = () => {
     const [allApps, setAllApps] = useState([]);
-    const [selectedApp, setSelectedApp] = useState(null);
     
     const [filter, setFilter] = useState([]);
     const [filteredApps, setFilteredApps] = useState([]);
-
     const [summaryList, setSummaryList] = useState([]);
-
+    
+    const [selectedApp, setSelectedApp] = useState(null);
+    
     useEffect(() => {
         async function getAllInitialApps() {
-            const allInitialApps = await steamAppService.getAll();
+            const allInitialApps = await loader.waitForLoad(steamAppService.getAll());
             setAllApps(allInitialApps);
         }
         getAllInitialApps();
@@ -90,19 +94,35 @@ const App = () => {
     };
 
     const onFilterChange = async (event) => {
+        console.log('onFilterChange')
         setFilter(event.target.value);
         const tmpFilteredApps = event.target.value === '' ? [] : allApps.filter(a => a.name.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1);
         setFilteredApps(tmpFilteredApps);
+        console.log('tmpFilteredApps.length')
+        console.log(tmpFilteredApps.length)
+
+        if (tmpFilteredApps.length > 0 && tmpFilteredApps.length <= 10) {
+            const appIds = await loader.waitForLoad(steamAppService.getMultipleById(filteredApps.map(a => a.appid)));
+            setSummaryList(appIds);
+        }
     };
+
+    console.log('rendering...')
 
     return (
         <div>
             <button onClick={ () => selectSteamApp(440) }>Click</button>
+            <div>
             { selectedApp !== null
                 ? <SteamApp app={ selectedApp } />
                 : null
             }
             <p id='description'></p>
+            </div>
+            { summaryList.length > 0 
+                ? <SteamAppSummaryList apps={ summaryList } />
+                : null
+            } 
             <SteamAppFilter filter={ filter } onFilterChange={ onFilterChange } />
             { filteredApps.length > 0
                 ? <SteamAppNameList apps={ filteredApps } />
