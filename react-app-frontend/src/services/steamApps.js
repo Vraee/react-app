@@ -12,6 +12,19 @@ const getById = async (id) => {
     console.log('getById');
     const res = await axios.get(`${ baseUrl }/${ id }`);
     return res.data[id].data;
-}
+};
 
-export default { getAll, getById };
+const getMultipleById = async (ids) => {
+    console.log('getMultipleById');
+    let multipleAppData = [];
+
+    const promises = ids.map(async id => {
+        const singleAppData = await getById(id);
+        multipleAppData = multipleAppData.concat(singleAppData);
+    });
+
+    await Promise.all(promises);
+    return multipleAppData;
+};
+
+export default { getAll, getById, getMultipleById };

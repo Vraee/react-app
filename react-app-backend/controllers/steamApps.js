@@ -19,11 +19,15 @@ steamAppsRouter.get('/', async (req, res) => {
 
 steamAppsRouter.get('/:id', async (req, res) => {
     try {
+        // Despite the parameter name 'appids', the API apparently doesn't
+        // (currently) support fetching data for multiple games at once.
         const steamApp = await axios.get(`${ appDetailsUrl }/?appids=${ req.params.id }`);
         res.send(steamApp.data);
     } catch (exception) {
         console.log(exception);
     }
 });
+
+// TODO GetNewsForApp, GetGlobalAchievementPercentagesForApp 
 
 module.exports = steamAppsRouter;
