@@ -3,28 +3,28 @@ import { connect } from 'react-redux'
 
 import SteamAppSummary from './SteamAppSummary';
 
+import { displayChange } from '../reducers/displayStateReducer';
 import { selectApp } from '../reducers/steamAppReducer';
 
-import { displayStateHelper } from '../utils/displayStateHelper';
+import { states } from '../utils/displayStateHelper';
 
 
 const SteamAppSummaryList = (props) => {
-    if (props.detailedApps.length > 1) {
-        return(
-            props.detailedApps
-                .filter(a => a !== undefined)
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map(a =>
-                    <SteamAppSummary 
-                        key={ a.steam_appid }
-                        app={ a }
-                        className='summaryListItem'
-                        onClick={ () => props.selectApp(a.steam_appid).then(() => displayStateHelper()) }
-                    />
-                )
-        );
-    }
-    return null;
+    console.log('SteamAppSummaryList')
+    console.log(props.detailedApps)
+    return(
+        props.detailedApps
+            .filter(a => a !== undefined)
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(a =>
+                <SteamAppSummary 
+                    key={ a.steam_appid }
+                    app={ a }
+                    className='summaryListItem'
+                    onClick={ () => props.selectApp(a.steam_appid).then(() => props.displayChange(states.details)) }
+                />
+            )
+    );
 };
 
 const mapStateToProps = (state) => {
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    selectApp
+    selectApp, displayChange
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SteamAppSummaryList);

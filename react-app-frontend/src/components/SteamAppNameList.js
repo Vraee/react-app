@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { displayChange } from '../reducers/displayStateReducer';
 import { selectApp } from '../reducers/steamAppReducer';
 
-import { displayStateHelper } from '../utils/displayStateHelper';
+import { states } from '../utils/displayStateHelper';
 
 const SteamAppNameList = (props) => {
     if (props.shortApps.length <= 100 && props.shortApps.length > 10) {
@@ -13,8 +14,9 @@ const SteamAppNameList = (props) => {
                 .map( a =>
                     <SteamAppName 
                         key={ a.appid } 
-                        app={ a } 
-                        onClick={ () => props.selectApp(a.appid).then(() => displayStateHelper()) } />
+                        app={ a }
+                        onClick={ () => props.selectApp(a.appid).then(() => props.displayChange(states.details)) }
+                    />
                 )
         );
     }
@@ -37,7 +39,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    selectApp
+    selectApp, displayChange
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SteamAppNameList);
