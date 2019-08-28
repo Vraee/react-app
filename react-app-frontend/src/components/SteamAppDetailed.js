@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import ImageGrid from './ImageGrid';
 import SteamAppSummary from './SteamAppSummary';
 
+import { clearList } from '../reducers/steamAppReducer';
+import { displayStateHelper } from '../utils/displayStateHelper';
+
 const SteamAppDetailed = (props) => {
     const app = props.detailedApps[0];
 
@@ -17,8 +20,16 @@ const SteamAppDetailed = (props) => {
         description = tmpElement.textContent || tmpElement.innerText || '';
         tmpElement.remove();
 
+        const onClick = () => {
+            props.clearList();
+            displayStateHelper();
+        }
+
         return(
             <div>
+                <button onClick={ onClick }>
+                    Back
+                </button>
                 <SteamAppSummary app={ app } />
                 <div id='steamAppDescription'>{ description }</div>
                 { app.screenshots !== undefined && app.screenshots.length > 0
@@ -42,4 +53,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(SteamAppDetailed);
+export default connect(mapStateToProps, { clearList })(SteamAppDetailed);

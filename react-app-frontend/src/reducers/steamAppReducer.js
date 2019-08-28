@@ -16,7 +16,6 @@ const steamAppReducer = (state = [], action) => {
 }
 
 export const listAppData = (ids) => {
-    console.log('listAppData')
     return async dispatch => {
         const apps = await loader.waitForLoad(steamAppService.getMultipleById(ids));
         dispatch({
@@ -33,7 +32,6 @@ export const clearList = () => {
 }
 
 export const selectApp = (id) => {
-    console.log('selectApp')
     return async dispatch => {
         const app = await loader.waitForLoad(steamAppService.getById(id));
         dispatch({

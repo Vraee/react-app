@@ -6,7 +6,7 @@ import store from './store';
 
 import App from './App';
 
-store.subscribe(() => console.log(store.getState()));
+//store.subscribe(() => console.log(store.getState()));
 
 const renderApp = () => {
     ReactDOM.render(

@@ -6,7 +6,6 @@ import { selectApp } from '../reducers/steamAppReducer';
 import { displayStateHelper } from '../utils/displayStateHelper';
 
 const SteamAppNameList = (props) => {
-    console.log(props.shortApps.length)
     if (props.shortApps.length <= 100 && props.shortApps.length > 10) {
         return(
             props.shortApps

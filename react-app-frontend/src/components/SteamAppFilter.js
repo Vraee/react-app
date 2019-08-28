@@ -5,7 +5,7 @@ import { filterChange } from '../reducers/filterReducer';
 import { filterApps } from '../reducers/steamAppShortReducer';
 import { listAppData, clearList } from '../reducers/steamAppReducer';
 
-import {displayStateHelper} from '../utils/displayStateHelper';
+import { displayStateHelper } from '../utils/displayStateHelper';
 
 const SteamAppFilter = (props) => {
     const onFilterChange = (event) => {
