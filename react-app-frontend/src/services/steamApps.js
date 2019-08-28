@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3001/api/steamapps';
+const baseUrl = '/api/steamapps';
 
 const getAll = async () => {
     console.log('getAll');
