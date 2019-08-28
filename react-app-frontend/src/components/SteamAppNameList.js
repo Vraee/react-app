@@ -1,22 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { selectApp } from '../reducers/steamAppReducer';
+
 const SteamAppNameList = (props) => {
-    if (props.shortApps.length <= 50 && props.shortApps.lengt > 10) {
+    console.log(props.shortApps.length)
+    if (props.shortApps.length <= 100 && props.shortApps.length > 10) {
         return(
             props.shortApps
-                .sort()
+                .sort((a, b) => a.name.localeCompare(b.name))
                 .map( a =>
-                    <SteamAppName key={ a.appid } app={ a }/>
+                    <SteamAppName key={ a.appid } app={ a } onClick={ () => props.selectApp(a.appid) } />
                 )
         );
     }
     return null;
 };
 
-const SteamAppName = ({ app }) => {
+const SteamAppName = ({ app, onClick }) => {
     return(
-        <div>
+        <div className='nameListItem' onClick={ onClick }>
             <h3>{ app.name }</h3>
             <p>{ `SteamID ${ app.appid }` }</p>
         </div>
@@ -29,4 +32,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(SteamAppNameList);
+const mapDispatchToProps = {
+    selectApp
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SteamAppNameList);

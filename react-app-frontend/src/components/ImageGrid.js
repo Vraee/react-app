@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../image.css';
+import '../css/image.css';
 
 const ImageGrid = ({ images }) => {
     let rows = [];
@@ -25,7 +25,9 @@ const ImageColumn = ({ images, rowKey }) => {
 };
 const Image = ({ imageSource }) => {
     return (
-        <img src={ imageSource } style={ {width:'20%'} } />
+        <a href={ imageSource } target='_blank' rel='noopener noreferrer'>
+            <img src={ imageSource } style={ {width:'20%'} } alt='' />
+        </a>
     );
 };
 

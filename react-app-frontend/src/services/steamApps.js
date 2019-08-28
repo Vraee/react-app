@@ -29,7 +29,8 @@ const getMultipleById = async (ids) => {
 
 const getAppNews = async (id) => {
     console.log('getAppNews');
-    const res = await axios.get(`${ baseUrl }/${ id }/news`)
+    const res = await axios.get(`${ baseUrl }/${ id }/news`);
+    return res.data.appnews.newsitems;
 }
 
 export default { getAll, getById, getMultipleById };
