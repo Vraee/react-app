@@ -18,6 +18,7 @@ const steamAppShortReducer = (state = [], action) => {
 }
 
 export const initialiseApps = (apps) => {
+    console.log('initialiseApps')
     return async dispatch => {
         const apps = await loader.waitForLoad(steamAppService.getAll());
         dispatch({

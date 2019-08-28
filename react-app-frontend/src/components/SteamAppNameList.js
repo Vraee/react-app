@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import { selectApp } from '../reducers/steamAppReducer';
 
+import { displayStateHelper } from '../utils/displayStateHelper';
+
 const SteamAppNameList = (props) => {
     console.log(props.shortApps.length)
     if (props.shortApps.length <= 100 && props.shortApps.length > 10) {
@@ -10,7 +12,10 @@ const SteamAppNameList = (props) => {
             props.shortApps
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map( a =>
-                    <SteamAppName key={ a.appid } app={ a } onClick={ () => props.selectApp(a.appid) } />
+                    <SteamAppName 
+                        key={ a.appid } 
+                        app={ a } 
+                        onClick={ () => props.selectApp(a.appid).then(() => displayStateHelper()) } />
                 )
         );
     }

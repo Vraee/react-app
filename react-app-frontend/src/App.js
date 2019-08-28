@@ -9,22 +9,32 @@ import SteamAppSummaryList from './components/SteamAppSummaryList';
 
 import { initialiseApps } from './reducers/steamAppShortReducer';
 
+import { states } from './utils/displayStateHelper';
+
 import './css/app.css';
 
 const App = (props) => {
+    const initialiseApps = props.initialiseApps;
+
     useEffect(() => {
-        props.initialiseApps();
-    }, [props]);
+        initialiseApps();
+    }, [initialiseApps]);
 
     return (
         <div>
             <h1>Steam app finder</h1>
             <SteamAppFilter />
-            <SteamAppSummaryList />
-            <SteamAppDetailed />
-            <SteamAppNameList />
+            { props.displayState === states.summaries ? <SteamAppSummaryList /> : null }
+            { props.displayState === states.details ? <SteamAppDetailed /> : null }
+            { props.displayState === states.names ? <SteamAppNameList /> : null }
         </div>
     );
 }
 
-export default connect(null, { initialiseApps })(App);
+const mapStateToProps = (state) => {
+    return {
+        displayState: state.displayState
+    };
+};
+
+export default connect(mapStateToProps, { initialiseApps })(App);

@@ -5,6 +5,9 @@ import SteamAppSummary from './SteamAppSummary';
 
 import { selectApp } from '../reducers/steamAppReducer';
 
+import { displayStateHelper } from '../utils/displayStateHelper';
+
+
 const SteamAppSummaryList = (props) => {
     if (props.detailedApps.length > 1) {
         return(
@@ -16,7 +19,7 @@ const SteamAppSummaryList = (props) => {
                         key={ a.steam_appid }
                         app={ a }
                         className='summaryListItem'
-                        onClick={ () => props.selectApp(a.steam_appid) }
+                        onClick={ () => props.selectApp(a.steam_appid).then(() => displayStateHelper()) }
                     />
                 )
         );
