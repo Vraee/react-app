@@ -19,7 +19,7 @@ export const displayStateHelper = () => {
                 listAppData(store.getState().shortApps.map(a => a.appid))
             );
             dispactChange(states.summaries);
-        } else if (appNamesLength <= 100) {
+        } else if (appNamesLength <= 1000) {
             store.dispatch(clearList());
             dispactChange(states.names);
         } else {

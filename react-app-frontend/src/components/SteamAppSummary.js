@@ -8,7 +8,7 @@ const SteamAppSummary = ({ app, className, onClick }) => {
             <p>{ `Developer: ${ app.developers !== undefined ? app.developers[0] : 'UNKNOWN '}` }</p>
             <p>{ `Publisher: ${ app.publishers !== undefined ? app.publishers[0] : 'UNKNOWN' }` }</p>
             <p>{ `Metacritic: ${ app.metacritic !== undefined ? app.metacritic.score : 'UNKNOWN' }` }</p>
-            <p>{ app.short_description !== undefined ? app.short_description : null }</p>
+            <p className='steamAppDescriptionShort'>{ app.short_description !== undefined ? app.short_description : null }</p>
         </div>
     );
 };

@@ -5,7 +5,9 @@ import ImageGrid from './ImageGrid';
 import SteamAppSummary from './SteamAppSummary';
 
 import { clearList } from '../reducers/steamAppReducer';
+import { setNotification } from '../reducers/notificationReducer';
 import { displayStateHelper } from '../utils/displayStateHelper';
+import { dispatchNotificationWithTimeout } from '../utils/notificationHelper';
 
 const SteamAppDetailed = (props) => {
     const app = props.detailedApps[0];
@@ -22,7 +24,11 @@ const SteamAppDetailed = (props) => {
         }
 
         const onClick = () => {
-            props.clearList();
+            displayStateHelper();
+        }
+        
+        if (app === undefined) {
+            dispatchNotificationWithTimeout('No detailed data available', 4000);
             displayStateHelper();
         }
 
@@ -41,9 +47,7 @@ const SteamAppDetailed = (props) => {
                             : null}
                     </div>
                     : 
-                    <div className='notFound'>
-                        <p>One match found<br />However, there's no detailed data available</p>
-                    </div>
+                    null
                 }
             </div>
         );
@@ -55,4 +59,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { clearList })(SteamAppDetailed);
+export default connect(mapStateToProps, { clearList, setNotification })(SteamAppDetailed);

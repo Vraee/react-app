@@ -10,8 +10,6 @@ import { states } from '../utils/displayStateHelper';
 
 
 const SteamAppSummaryList = (props) => {
-    console.log('SteamAppSummaryList')
-    console.log(props.detailedApps)
     return(
         props.detailedApps
             .filter(a => a !== undefined)

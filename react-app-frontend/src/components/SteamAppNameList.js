@@ -7,27 +7,24 @@ import { selectApp } from '../reducers/steamAppReducer';
 import { states } from '../utils/displayStateHelper';
 
 const SteamAppNameList = (props) => {
-    if (props.shortApps.length <= 100 && props.shortApps.length > 10) {
-        return(
-            props.shortApps
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map( a =>
-                    <SteamAppName 
-                        key={ a.appid } 
-                        app={ a }
-                        onClick={ () => props.selectApp(a.appid).then(() => props.displayChange(states.details)) }
-                    />
-                )
-        );
-    }
-    return null;
+    return(
+        props.shortApps
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map( a =>
+                <SteamAppName 
+                    key={ a.appid } 
+                    app={ a }
+                    onClick={ () => props.selectApp(a.appid).then(() => props.displayChange(states.details)) }
+                />
+            )
+    );
 };
 
 const SteamAppName = ({ app, onClick }) => {
     return(
         <div className='nameListItem' onClick={ onClick }>
             <h3>{ app.name }</h3>
-            <p>{ `SteamID ${ app.appid }` }</p>
+            <p>{ `SteamID: ${ app.appid }` }</p>
         </div>
     );
 };

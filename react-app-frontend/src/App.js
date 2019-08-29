@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-//import Notification from './components/Notification';
+import Notification from './components/Notification';
 import SteamAppDetailed from './components/SteamAppDetailed';
 import SteamAppFilter from './components/SteamAppFilter';
 import SteamAppNameList from './components/SteamAppNameList';
@@ -23,6 +23,7 @@ const App = (props) => {
     return (
         <div>
             <h1>Steam app finder</h1>
+            { props.notification !== null ? <Notification /> : null }
             { props.displayState === states.details ? <SteamAppDetailed /> : <SteamAppFilter /> }
             { props.displayState === states.summaries || props.displayState === states.oneSummary ? <SteamAppSummaryList /> : null }
             { props.displayState === states.names ? <SteamAppNameList /> : null }
@@ -32,7 +33,8 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        displayState: state.displayState
+        displayState: state.displayState,
+        notification: state.notification
     };
 };
 
