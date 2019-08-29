@@ -25,6 +25,8 @@ export const displayStateHelper = () => {
         } else {
             dispactChange(states.none);
         }
+    } else {
+        dispactChange(states.none);
     }
 };
 
