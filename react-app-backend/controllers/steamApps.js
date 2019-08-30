@@ -1,9 +1,8 @@
 const steamAppsRouter = require('express').Router();
 const axios = require('axios');
 
-const steamKey = 'BDB5E293C348DB91175B17297A4BD784';
 const baseUrlApi = 'http://api.steampowered.com/';
-const allAppsUrl = `${ baseUrlApi }ISteamApps/GetAppList/v0002/?key=${ steamKey }&format=json`;
+const allAppsUrl = `${ baseUrlApi }ISteamApps/GetAppList/v0002/?format=json`;
 
 const baseUrlStore = "https://store.steampowered.com/";
 const appDetailsUrl = `${ baseUrlStore }api/appdetails`;
